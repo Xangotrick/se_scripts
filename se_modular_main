@@ -1,0 +1,41 @@
+public void Main(string argument, UpdateType updateSource)
+        {
+            //ARGUMENTS SEPARATED BY ;
+            //IF LAST ARGUMENT IS 'PRINT', IT PRINTS OUT THE LIST OF ARGS, FOR DEBUGGING
+            //FIRST ARGUMENT IS THE REFERENCE FOR WHICH FUNCTION WE WANT TO CALL
+            //FOLLOWING ARGUMENTS ARE THE ARGUMENTS FOR THE FUNCTION WE ARE CALLING
+
+            char[] separator = { ';' };
+            string[] args = argument.Split(separator);
+
+
+            
+            //PRINTS THE LIST OF ARGS IF "PRINT" IS THE LAST ARG
+            if(args[args.Length - 1] == "PRINT")
+            {
+                Echo("Function Call:");
+                Echo(args[0]);
+                Echo("Arguments:");
+                string[] printargs = args.Except(new string[] { args[0], args[args.Length - 1] }).ToArray();
+                foreach (string astring in printargs)
+                {
+                    Echo(astring);
+                }
+            }
+            string functioncall = args[0];
+            string[] functionargs = args.Except(new string[] { args[0], args[args.Length - 1] }).ToArray();
+
+            switch(functioncall)
+            {
+                case "default":
+                    defaultfunction(functionargs);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        void defaultfunction(string[] args)
+        {
+            Echo(args.Length.ToString());
+        }

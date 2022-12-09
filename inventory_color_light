@@ -1,0 +1,42 @@
+//TAKES TWO ARGUMENTS, NAME OF INVENTORY GROUP AND THEN NAME OF LIGHT GROUP
+        //COLOR OF LIGHT GROUP LIGHTING WILL GO GREEN THEN RED THEN PURPLE BASED ON INVENTORY FILL PERCENT
+        void inventory_color_light(string[] args)
+        {
+            string invgroupname = args[0];
+            string lightgroupname = args[1];
+
+            var groupi = GridTerminalSystem.GetBlockGroupWithName(invgroupname);
+            var lighti = GridTerminalSystem.GetBlockGroupWithName(lightgroupname);
+
+            List<IMyTerminalBlock> listofblocks = new List<IMyTerminalBlock>();
+            List<IMyTerminalBlock> listoflight = new List<IMyTerminalBlock>();
+
+            groupi.GetBlocks(listofblocks);
+            lighti.GetBlocks(listoflight);
+
+            float invL = 0;
+            float invLM = 0;
+
+            foreach (IMyTerminalBlock ablock in listofblocks)
+            {
+                Echo(ablock.CustomName);
+                invL += (float)ablock.GetInventory().CurrentVolume;
+                invLM += (float)ablock.GetInventory().MaxVolume;
+            }
+            float ratio = invL / invLM;
+            ratio = ratio / 0.20f;
+            Echo(ratio.ToString());
+
+            foreach (IMyTerminalBlock alight in listoflight)
+            {
+                IMyLightingBlock alight2 = alight as IMyLightingBlock;
+                if (ratio < 0.95)
+                {
+                    alight2.Color = new Color(ratio, 1 - ratio, 0);
+                }
+                else
+                {
+                    alight2.Color = new Color(ratio, 0, 1);
+                }
+            }
+        }

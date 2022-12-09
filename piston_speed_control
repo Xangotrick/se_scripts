@@ -1,0 +1,19 @@
+//ARG 0 PISTON GROUP NAME
+        //ARG 1 PISTON SPEED
+        //SETS THE SPEED OF ALL PISTONS IN THE PISTON GROUP TO THE REQUESTED PISTON SPEED
+        void piston_speed_control(string[] args)
+        {
+            string pistongroupname = args[0];
+            string pistonspeed = args[1];
+            var pistons = GridTerminalSystem.GetBlockGroupWithName(pistongroupname);
+            List<IMyTerminalBlock> pistonblocks = new List<IMyTerminalBlock>();
+
+            pistons.GetBlocks(pistonblocks);
+
+            float speed = float.Parse(pistonspeed);
+            foreach (IMyTerminalBlock ablock in pistonblocks)
+            {
+                IMyPistonBase apiston = ablock as IMyPistonBase;
+                apiston.Velocity = speed;
+            }
+        }

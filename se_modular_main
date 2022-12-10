@@ -10,20 +10,17 @@ public void Main(string argument, UpdateType updateSource)
 
 
             
-            //PRINTS THE LIST OF ARGS IF "PRINT" IS THE LAST ARG
-            if(args[args.Length - 1] == "PRINT")
-            {
-                Echo("Function Call:");
-                Echo(args[0]);
-                Echo("Arguments:");
-                string[] printargs = args.Except(new string[] { args[0], args[args.Length - 1] }).ToArray();
-                foreach (string astring in printargs)
-                {
-                    Echo(astring);
-                }
-            }
+            //PRINTS THE LIST OF ARGS
+            
+            Echo("Function Call:");
+            Echo(args[0]);
+            Echo("Arguments:");
             string functioncall = args[0];
-            string[] functionargs = args.Except(new string[] { args[0], args[args.Length - 1] }).ToArray();
+            string[] functionargs = args.Except(new string[] { args[0]}).ToArray();
+            foreach (string astring in functionargs)
+            {
+                Echo(astring);
+            }
 
             switch(functioncall)
             {

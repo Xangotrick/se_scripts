@@ -16,7 +16,11 @@ public void Main(string argument, UpdateType updateSource)
             Echo(args[0]);
             Echo("Arguments:");
             string functioncall = args[0];
-            string[] functionargs = args.Except(new string[] { args[0]}).ToArray();
+            string[] functionargs = new string[args.Length - 1];
+            for(int i = 0; i < functionargs.Length;i++)
+            {
+                functionargs[i] = args[i + 1];
+            }
             foreach (string astring in functionargs)
             {
                 Echo(astring);
@@ -24,15 +28,13 @@ public void Main(string argument, UpdateType updateSource)
 
             switch(functioncall)
             {
-                case "default":
-                    defaultfunction(functionargs);
+                case "pistonspeed":
+                    //piston_speed_control(functionargs);
+                    break;
+                case "writelcd":
+                    //display_lcd_text(functionargs);
                     break;
                 default:
                     break;
             }
-        }
-
-        void defaultfunction(string[] args)
-        {
-            Echo(args.Length.ToString());
         }

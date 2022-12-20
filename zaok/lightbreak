@@ -1,11 +1,9 @@
 public void Main(string argument)
         {
-            parkingbreak(argument.Split(';'));
+            parkingbreak("Lumieres Arrière","Poste de Pilotage");
         }
-public void parkingbreak(string[] args )
+public void parkingbreak(string lights, string cockpit)
         {
-            string lights = args[0];
-            string cockpit = args[1];
             IMyCockpit acockpit = GridTerminalSystem.GetBlockWithName(cockpit) as IMyCockpit;
             List<IMyLightingBlock> listoflight = new List<IMyLightingBlock>();
             GridTerminalSystem.GetBlockGroupWithName(lights).GetBlocksOfType<IMyLightingBlock>(listoflight);

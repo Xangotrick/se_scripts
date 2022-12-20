@@ -1,15 +1,26 @@
 public void Main(string argument)
         {
-            parkingbreak("Lumieres Arrière","Poste de Pilotage");
+            parkingbreak("Lumières Arrière", "Poste de Pilotage", "Piston Scellage");
         }
-public void parkingbreak(string lights, string cockpit)
+        public void parkingbreak(string lights, string cockpit, string pistonname)
         {
+            float pistonspeed = 0.5f;
             IMyCockpit acockpit = GridTerminalSystem.GetBlockWithName(cockpit) as IMyCockpit;
             List<IMyLightingBlock> listoflight = new List<IMyLightingBlock>();
             GridTerminalSystem.GetBlockGroupWithName(lights).GetBlocksOfType<IMyLightingBlock>(listoflight);
+            List<IMyPistonBase> listofpist = new List<IMyPistonBase>();
+            GridTerminalSystem.GetBlockGroupWithName(lights).GetBlocksOfType<IMyPistonBase>(listofpist);
             acockpit.HandBrake = !acockpit.HandBrake;
-            foreach(IMyLightingBlock ablock in listoflight)
+            if(!acockpit.HandBrake)
+            {
+                pistonspeed = -pistonspeed
+            }
+            foreach (IMyLightingBlock ablock in listoflight)
             {
                 ablock.Enabled = acockpit.HandBrake;
+            }
+            foreach(IMyPistonBase apist in listofpist)
+            {
+                apist.Velocity = pistonspeed;
             }
         }

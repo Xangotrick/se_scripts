@@ -1,0 +1,17 @@
+public void Main(string argument)
+        {
+            parkingbreak(argument.Split(';'));
+        }
+public void parkingbreak(string[] args )
+        {
+            string lights = args[0];
+            string cockpit = args[1];
+            IMyCockpit acockpit = GridTerminalSystem.GetBlockWithName(cockpit) as IMyCockpit;
+            List<IMyLightingBlock> listoflight = new List<IMyLightingBlock>();
+            GridTerminalSystem.GetBlockGroupWithName(lights).GetBlocksOfType<IMyLightingBlock>(listoflight);
+            acockpit.HandBrake = !acockpit.HandBrake;
+            foreach(IMyLightingBlock ablock in listoflight)
+            {
+                ablock.Enabled = acockpit.HandBrake;
+            }
+        }

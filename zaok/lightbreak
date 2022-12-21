@@ -1,19 +1,21 @@
-public void Main(string argument)
+ public void Main(string argument)
         {
-            parkingbreak("Lumières Arrière", "Poste de Pilotage", "Piston Scellage");
+            parkingbreak("Lumières Arrière", "Poste de Pilotage", "Piston Scellage", "");
         }
-        public void parkingbreak(string lights, string cockpit, string pistonname)
+        public void parkingbreak(string lights, string cockpit, string pistonname, string mag)
         {
             float pistonspeed = 0.5f;
             IMyCockpit acockpit = GridTerminalSystem.GetBlockWithName(cockpit) as IMyCockpit;
             List<IMyLightingBlock> listoflight = new List<IMyLightingBlock>();
             GridTerminalSystem.GetBlockGroupWithName(lights).GetBlocksOfType<IMyLightingBlock>(listoflight);
             List<IMyPistonBase> listofpist = new List<IMyPistonBase>();
-            GridTerminalSystem.GetBlockGroupWithName(lights).GetBlocksOfType<IMyPistonBase>(listofpist);
+            GridTerminalSystem.GetBlockGroupWithName(pistonname).GetBlocksOfType<IMyPistonBase>(listofpist);
+            List<IMyLandingGear> listofmag = new List<IMyLandingGear>();
+            GridTerminalSystem.GetBlockGroupWithName(mag).GetBlocksOfType<IMyLandingGear>(listofmag);
             acockpit.HandBrake = !acockpit.HandBrake;
             if(!acockpit.HandBrake)
             {
-                pistonspeed = -pistonspeed
+                pistonspeed = -pistonspeed;
             }
             foreach (IMyLightingBlock ablock in listoflight)
             {
@@ -22,5 +24,9 @@ public void Main(string argument)
             foreach(IMyPistonBase apist in listofpist)
             {
                 apist.Velocity = pistonspeed;
+            }
+            foreach(IMyLandingGear agear in listofmag)
+            {
+                agear.ApplyAction("SwitchLock");
             }
         }
